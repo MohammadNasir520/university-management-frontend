@@ -21,15 +21,31 @@ const page = () => {
   };
 
   return (
-    <Row>
-      <Col sm={12} md={16} lg={16}>
+    <Row
+      justify={"center"}
+      align={"middle"}
+      style={{
+        minHeight: "100vh",
+      }}
+    >
+      <Col sm={12} md={16} lg={10}>
         <Image src={loginImage} width={500} alt="login image"></Image>
       </Col>
       <Col sm={12} md={8} lg={8}>
-        <h1>First Login your account</h1>
+        <h1
+          style={{
+            margin: "15px 0px",
+          }}
+        >
+          First Login your account
+        </h1>
         <div>
           <Form submitHandler={onSubmit}>
-            <div>
+            <div
+              style={{
+                margin: "15px 0px",
+              }}
+            >
               <FormInput
                 name="id"
                 type="text"
