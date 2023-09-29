@@ -6,15 +6,19 @@ import loginImage from "../../assets/login-image.png";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
+import { useUserLoginMutation } from "@/redux/api/authApi";
 type FormValues = {
   id: string;
   password: string;
 };
 
-const page = () => {
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+const LoginPage = () => {
+  const [userLogin] = useUserLoginMutation();
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      console.log(data);
+      const res = await userLogin({ ...data });
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
@@ -70,4 +74,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default LoginPage;
