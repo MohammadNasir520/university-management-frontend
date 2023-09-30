@@ -1,5 +1,7 @@
 import { authKey } from "@/constants/storageKey";
+import { ResponseErrorType, ResponseSuccessType } from "@/types";
 import { getFromLocalStorage } from "@/utils/local-storage";
+
 import axios from "axios";
 
 const instance = axios.create();
@@ -21,21 +23,37 @@ instance.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
+
     return Promise.reject(error);
   }
 );
 
 // Add a response interceptor
+
 instance.interceptors.response.use(
+  // @ts-ignore
   function (response) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    return response;
+
+    const responseObject: ResponseSuccessType = {
+      data: response?.data?.data,
+      meta: response?.data?.meta,
+    };
+
+    return responseObject;
   },
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    return Promise.reject(error);
+
+    const responseObject: ResponseErrorType = {
+      statusCode: error?.response?.data?.statusCode || 500,
+      message: error?.response?.data?.messages || "something went wrong",
+      errorMessages: error?.response?.data?.errorMessages,
+    };
+    return responseObject;
+    // return Promise.reject(error);
   }
 );
 
