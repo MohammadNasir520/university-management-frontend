@@ -15,7 +15,7 @@ type SelectFieldProps = {
   value?: string | string[] | undefined;
   label?: string;
   defaultValue?: SelectFieldProps;
-  placeholder: string;
+  placeholder?: string;
 };
 
 const FormSelectField = ({
