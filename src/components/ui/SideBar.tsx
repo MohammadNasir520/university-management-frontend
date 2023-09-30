@@ -5,12 +5,17 @@ import { useState } from "react";
 
 import { USER_ROLE } from "@/constants/role";
 import { sidebarItems } from "@/constants/sidebarItems";
+import { getUserInfo } from "@/services/auth.service";
 
 const { Sider } = Layout;
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const role = USER_ROLE.ADMIN;
+
+  const userInfo: any = getUserInfo();
+  const role = userInfo.role;
+  console.log(role);
+  // const role = USER_ROLE.ADMIN;
 
   return (
     <div>
@@ -38,7 +43,7 @@ const SideBar = () => {
             marginBottom: "1rem",
           }}
         >
-          PH-University
+          UMS
         </div>
 
         <Menu

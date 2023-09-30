@@ -1,6 +1,7 @@
 "use client";
 import Contents from "@/components/ui/Contents";
 import SideBar from "@/components/ui/SideBar";
+import Spinner from "@/components/ui/Spinner";
 import { isLoggedIn } from "@/services/auth.service";
 import { Layout } from "antd";
 import { useRouter } from "next/navigation";
@@ -20,7 +21,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }, [router, isLoading]);
 
   if (!isLoading) {
-    return <p>loading.............</p>;
+    return <Spinner></Spinner>;
   }
   return (
     <Layout hasSider>

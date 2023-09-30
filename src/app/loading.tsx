@@ -1,9 +1,8 @@
+import Spinner from "@/components/ui/Spinner";
+import { Space, Spin } from "antd";
+
 const Loading = () => {
-  return (
-    <div>
-      <h1>Loading...........</h1>
-    </div>
-  );
+  return <Spinner></Spinner>;
 };
 
 export default Loading;
