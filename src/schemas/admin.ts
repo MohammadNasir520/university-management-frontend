@@ -8,5 +8,8 @@ export const adminSchema = yup.object().shape({
       middleName: yup.string().required("middle name name is required"),
       lastName: yup.string().required("last name name is required"),
     }),
+    email: yup.string().email().required("Email is required"),
+    designation: yup.string().required("Designation is required"),
+    dateOfBirth: yup.string().required("Date of Birth is required"),
   }),
 });

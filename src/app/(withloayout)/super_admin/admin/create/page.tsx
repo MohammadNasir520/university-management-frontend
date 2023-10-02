@@ -10,6 +10,8 @@ import {
   bloodGroupOptions,
   genderOptions,
 } from "@/constants/global";
+import { adminSchema } from "@/schemas/admin";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, Col, Row } from "antd";
 
 const CreateAdminPage = () => {
@@ -25,7 +27,7 @@ const CreateAdminPage = () => {
       <h1>Create Admin page</h1>
 
       <div>
-        <Form submitHandler={onSubmit}>
+        <Form submitHandler={onSubmit} resolver={yupResolver(adminSchema)}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -70,7 +72,7 @@ const CreateAdminPage = () => {
               >
                 <FormInput
                   type="text"
-                  name="admin.name.LastName"
+                  name="admin.name.lastName"
                   size="large"
                   label="Last Name"
                 />
@@ -145,7 +147,7 @@ const CreateAdminPage = () => {
               >
                 <FormInput
                   type="email"
-                  name="admin.name.email"
+                  name="admin.email"
                   size="large"
                   label="Email"
                 />
