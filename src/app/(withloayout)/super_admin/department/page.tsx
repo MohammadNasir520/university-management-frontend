@@ -1,7 +1,10 @@
 "use client";
 import UMTable from "@/components/ui/UMTable";
-import { useDepartmentsQuery } from "@/redux/api/departmentApi";
-import { Button, Input } from "antd";
+import {
+  useDeleteDepartmentMutation,
+  useDepartmentsQuery,
+} from "@/redux/api/departmentApi";
+import { Button, Input, message } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -13,6 +16,7 @@ import {
 import ActionBar from "@/components/ui/ActionBar";
 import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import { useDebounced } from "@/redux/hooks";
+import dayjs from "dayjs";
 
 const DepartmentPage = () => {
   const query: Record<string, any> = {};
@@ -39,12 +43,25 @@ const DepartmentPage = () => {
   }
 
   const { data, isLoading } = useDepartmentsQuery({ ...query });
-  console.log(data);
+  // console.log(data);
   // @ts-ignore
   const departments = data?.departments;
   const meta = data?.meta;
-  // const { departments, meta } = data;
-  console.log(departments, meta);
+  const [deleteDepartment] = useDeleteDepartmentMutation();
+
+  const deleteHandler = async (id: string) => {
+    message.loading("deleteing.....");
+    try {
+      await deleteDepartment({ id });
+      console.log(data);
+
+      message.success("department deleted success fully");
+    } catch (err: any) {
+      console.error(err.message);
+      message.error(err.message);
+    }
+  };
+  // console.log(departments, meta);
 
   const columns = [
     {
@@ -54,6 +71,9 @@ const DepartmentPage = () => {
     {
       title: "CreatedAt",
       dataIndex: "createdAt",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
 
       sorter: true,
       // sorter: (a: any, b: any) => a.age - b.age,
@@ -63,19 +83,22 @@ const DepartmentPage = () => {
       render: function (data: any) {
         return (
           <>
-            <Button onClick={() => console.log(data)} type="primary">
+            {/* <Button onClick={() => console.log(data)} type="primary">
               <EyeOutlined />
-            </Button>
+            </Button> */}
             <Button
               style={{ margin: "0px 5px" }}
-              onClick={() => console.log(data)}
+              onClick={() => deleteDepartment(data?.id)}
               type="primary"
+              danger
             >
               <DeleteOutlined />
             </Button>
-            <Button onClick={() => console.log(data)} type="primary" danger>
-              <EditOutlined />
-            </Button>
+            <Link href={`/super_admin/department/edit/${data.id}`}>
+              <Button onClick={() => console.log(data)} type="primary">
+                <EditOutlined />
+              </Button>
+            </Link>
           </>
         );
       },
